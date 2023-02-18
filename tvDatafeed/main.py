@@ -140,7 +140,12 @@ class TvDatafeed:
 
             for xi in x:
                 xi = re.split("\[|:|,|\]", xi)
-                ts = datetime.datetime.fromtimestamp(float(xi[4]))
+                
+                timestamp = float(xi[4])
+                if timestamp < 0:
+                    ts = datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=(timestamp))
+                else:
+                    ts = datetime.datetime.fromtimestamp(timestamp)
 
                 row = [ts]
 
